@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Getting Started &mdash; SWAP 2.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Documentation" href="api/index.html" />
+    <link rel="prev" title="Welcome to SWAP’s documentation!" href="index.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> SWAP
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#automatic-installation">Automatic Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-swap">Configuring SWAP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-swap">Running SWAP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#online-swap">Online swap</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SWAP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Getting Started</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/setup.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>The SWAP algorithm was developed by [Phil Marshall et al.](<a class="reference external" href="https://github.com/drphilmarshall/SpaceWarps/raw/master/doc/sw-system-published.pdf">https://github.com/drphilmarshall/SpaceWarps/raw/master/doc/sw-system-published.pdf</a>), and the original implementation of the algorithm that provided the motivation for this work can be found [here](<a class="reference external" href="https://github.com/drphilmarshall/SpaceWarps">https://github.com/drphilmarshall/SpaceWarps</a>).</p>
+<p>The [caesar_external](<a class="reference external" href="https://github.com/miclaraia/caesar_external">https://github.com/miclaraia/caesar_external</a>) library provides functionality for interacting with live classifications from Panoptes and Caesar in the Zooniverse. Installing this library activates these features in swap.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="automatic-installation">
+<h3>Automatic Installation<a class="headerlink" href="#automatic-installation" title="Permalink to this headline">¶</a></h3>
+<p>Clone the repository:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">zooniverse</span><span class="o">/</span><span class="n">swap</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>Install with python pip:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="n">swap</span>
+</pre></div>
+</div>
+<p>We recommend doing this in a virtual environment, so use whatever method suits you to set that up.</p>
+</div>
+</div>
+<div class="section" id="configuring-swap">
+<h2>Configuring SWAP<a class="headerlink" href="#configuring-swap" title="Permalink to this headline">¶</a></h2>
+<p>SWAP can be used with multiple projects at the same time, each project must have its own unique identifier. This identifier should be used anywhere that ${NAME} shows up, and is completely arbitrary.</p>
+<p>To configure a new project with swap, start with the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>swap new ${NAME} --config
+</pre></div>
+</div>
+<p>This will bring up a python interpreter, which you can use to interact with the <cite>config</cite> object. The config object lets you set configure how swap should parse the csv classification dump from panoptes. Each project will have a different task key, and different labels that are used in the actual classification. The config annotation field has subfields <cite>‘task’</cite>, <cite>‘true’</cite>, and <cite>‘false’</cite> to configure this. This is an example of how this might be set up:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">annotation</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;T1&#39;</span><span class="p">,</span> <span class="s1">&#39;true&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Real&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;false&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Bogus&#39;</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]})</span>
+</pre></div>
+</div>
+<p>Other configuration options:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>config.annotation.task</td>
+<td>Task label, like T0, T1, …</td>
+</tr>
+<tr class="row-odd"><td>config.annotation.value_key</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>config.annotation.value_separator</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>config.annotation.true</td>
+<td>Expected classification value for a real detection.</td>
+</tr>
+<tr class="row-even"><td>config.annotation.false</td>
+<td>Expected classification value for a bogus detection</td>
+</tr>
+<tr class="row-odd"><td>config.mdr</td>
+<td>Missed detection rate used to draw the decision
+boundaries for retirement.</td>
+</tr>
+<tr class="row-even"><td>config.fpr</td>
+<td>False Positive rate used to draw the decision boundaries
+for retirement.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="running-swap">
+<h2>Running SWAP<a class="headerlink" href="#running-swap" title="Permalink to this headline">¶</a></h2>
+<p>Start by initializing swap’s gold labels by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>swap golds ${NAME} ${GOLDS_CSV_FILE}
+</pre></div>
+</div>
+<p>The csv file should have two columns labeled <cite>subject</cite> and <cite>gold</cite>. The gold label column should have
+a <cite>1</cite> for real subjects and a <cite>0</cite> for bogus subjects. Only one row per subject.</p>
+<p>Then run swap on a panoptes csv dump with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>`swap run ${NAME} ${CLASSIFICATION_DUMP}
+</pre></div>
+</div>
+<p>If swap runs out of memory during the process, you can split the csv into batches in a script
+and run <cite>swap.truncate()</cite> between batches. This clears the classification history for each
+user and subject tracked by swap, keeping only enough information to use as priors and keep
+making accurate predictions.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note that in order to preserve memory and time, SWAP first loads classifications</p>
+</div>
+<p>from the csv dump, then updates all the user scores at once, then updates all subject scores
+using the resulting user scores. This is different from how SWAP was originally envisioned
+in literature, but this is faster and saves resources.</p>
+<p>A lot of the swap ui commands end by opening a python interpreter, which allows you to
+inspect the resulting data before closing. The resulting scores are automatically saved
+on each run, which pickles a json blob of the configuration, subject data, user data,
+and the score thresholds used for retirement decisions.</p>
+</div>
+<div class="section" id="online-swap">
+<h2>Online swap<a class="headerlink" href="#online-swap" title="Permalink to this headline">¶</a></h2>
+<p>Online swap queries classifications from the panoptes api and sends them
+to a placeholder reducer in caesar. Make sure caesar_external is properly
+setup for this project, then configure online swap with:
+<cite>swap online config ${NAME} ${CAESAR_NAME}</cite> Where <cite>${CAESAR_NAME}</cite> is the name
+used to configure the caesar_external library for this project.</p>
+<p>Then run swap online with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>swap online run ${NAME}
+</pre></div>
+</div>
+<p>This will fetch the most recent classifications from the panoptes api, run swap on the data,
+then determine retirement thresholds, and send swap scores back to caesar.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api/index.html" class="btn btn-neutral float-right" title="API Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to SWAP’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'2.0.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>
