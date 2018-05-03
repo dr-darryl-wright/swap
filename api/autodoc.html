@@ -87,11 +87,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">API Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">swap.utils.control</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-swap.utils.config"><code class="docutils literal notranslate"><span class="pre">swap.utils.config</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-swap.utils.collection"><code class="docutils literal notranslate"><span class="pre">swap.utils.collection</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-swap.utils.online"><code class="docutils literal notranslate"><span class="pre">swap.utils.online</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-swap.utils.parser"><code class="docutils literal notranslate"><span class="pre">swap.utils.parser</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-swap.utils.subject"><code class="docutils literal notranslate"><span class="pre">swap.utils.subject</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-swap.utils.user"><code class="docutils literal notranslate"><span class="pre">swap.utils.user</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-caesar_external.extractor"><code class="docutils literal notranslate"><span class="pre">caesar_external.extractor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-caesar_external.extractor"><code class="docutils literal notranslate"><span class="pre">caesar_external.reducer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-caesar_external.data"><code class="docutils literal notranslate"><span class="pre">caesar_external.data</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-caesar_external.utils.caesar_utils"><code class="docutils literal notranslate"><span class="pre">caesar_external.utils.caesar_utils</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -164,11 +169,11 @@
 <span id="swap-utils-control"></span><h1><a class="reference internal" href="#module-swap.utils.control" title="swap.utils.control"><code class="xref py py-mod docutils literal notranslate"><span class="pre">swap.utils.control</span></code></a><a class="headerlink" href="#module-swap.utils.control" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="swap.utils.control.SWAP">
-<em class="property">class </em><code class="descclassname">swap.utils.control.</code><code class="descname">SWAP</code><span class="sig-paren">(</span><em>name</em>, <em>config=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/control.html#SWAP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.control.SWAP" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">swap.utils.control.</code><code class="descname">SWAP</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/control.html#SWAP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.control.SWAP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="swap.utils.control.SWAP.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>config=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/control.html#SWAP.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.control.SWAP.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/control.html#SWAP.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.control.SWAP.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
@@ -204,7 +209,7 @@
 
 <dl class="method">
 <dt id="swap.utils.control.SWAP.retire">
-<code class="descname">retire</code><span class="sig-paren">(</span><em>fpr</em>, <em>mdr</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/control.html#SWAP.retire"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.control.SWAP.retire" title="Permalink to this definition">¶</a></dt>
+<code class="descname">retire</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/control.html#SWAP.retire"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.control.SWAP.retire" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -229,24 +234,27 @@
 
 </dd></dl>
 
+</div>
+<div class="section" id="module-swap.utils.config">
+<span id="swap-utils-config"></span><h1><a class="reference internal" href="#module-swap.utils.config" title="swap.utils.config"><code class="xref py py-mod docutils literal notranslate"><span class="pre">swap.utils.config</span></code></a><a class="headerlink" href="#module-swap.utils.config" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="swap.utils.control.Config">
-<em class="property">class </em><code class="descclassname">swap.utils.control.</code><code class="descname">Config</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/control.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.control.Config" title="Permalink to this definition">¶</a></dt>
+<dt id="swap.utils.config.Config">
+<em class="property">class </em><code class="descclassname">swap.utils.config.</code><code class="descname">Config</code><span class="sig-paren">(</span><em>name</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/config.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.config.Config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
-<dt id="swap.utils.control.Config.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/control.html#Config.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.control.Config.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="swap.utils.config.Config.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/config.html#Config.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.config.Config.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="swap.utils.control.Config.dump">
-<code class="descname">dump</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/control.html#Config.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.control.Config.dump" title="Permalink to this definition">¶</a></dt>
+<dt id="swap.utils.config.Config.dump">
+<code class="descname">dump</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/config.html#Config.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.config.Config.dump" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="classmethod">
-<dt id="swap.utils.control.Config.load">
-<em class="property">classmethod </em><code class="descname">load</code><span class="sig-paren">(</span><em>dump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/control.html#Config.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.control.Config.load" title="Permalink to this definition">¶</a></dt>
+<dt id="swap.utils.config.Config.load">
+<em class="property">classmethod </em><code class="descname">load</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/config.html#Config.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.config.Config.load" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -256,11 +264,11 @@
 <span id="swap-utils-collection"></span><h1><a class="reference internal" href="#module-swap.utils.collection" title="swap.utils.collection"><code class="xref py py-mod docutils literal notranslate"><span class="pre">swap.utils.collection</span></code></a><a class="headerlink" href="#module-swap.utils.collection" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="swap.utils.collection.Collection">
-<em class="property">class </em><code class="descclassname">swap.utils.collection.</code><code class="descname">Collection</code><span class="sig-paren">(</span><em>items=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/collection.html#Collection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.collection.Collection" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">swap.utils.collection.</code><code class="descname">Collection</code><span class="sig-paren">(</span><em>config</em>, <em>items=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/collection.html#Collection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.collection.Collection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="swap.utils.collection.Collection.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>items=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/collection.html#Collection.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.collection.Collection.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>config</em>, <em>items=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/collection.html#Collection.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.collection.Collection.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
@@ -289,14 +297,14 @@
 <code class="descname">list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/collection.html#Collection.list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.collection.Collection.list" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="classmethod">
+<dl class="method">
 <dt id="swap.utils.collection.Collection.load">
-<em class="property">classmethod </em><code class="descname">load</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/collection.html#Collection.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.collection.Collection.load" title="Permalink to this definition">¶</a></dt>
+<code class="descname">load</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/collection.html#Collection.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.collection.Collection.load" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="staticmethod">
 <dt id="swap.utils.collection.Collection.new">
-<code class="descname">new</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/collection.html#Collection.new"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.collection.Collection.new" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">new</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/collection.html#Collection.new"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.collection.Collection.new" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -320,12 +328,12 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="staticmethod">
 <dt id="swap.utils.online.Online.receive">
-<em class="property">static </em><code class="descname">receive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/online.html#Online.receive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.online.Online.receive" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">receive</code><span class="sig-paren">(</span><em>swap</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/online.html#Online.receive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.online.Online.receive" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
 <dt id="swap.utils.online.Online.send">
-<em class="property">static </em><code class="descname">send</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/online.html#Online.send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.online.Online.send" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">send</code><span class="sig-paren">(</span><em>swap</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/online.html#Online.send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.online.Online.send" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -372,74 +380,101 @@
 <span id="swap-utils-subject"></span><h1><a class="reference internal" href="#module-swap.utils.subject" title="swap.utils.subject"><code class="xref py py-mod docutils literal notranslate"><span class="pre">swap.utils.subject</span></code></a><a class="headerlink" href="#module-swap.utils.subject" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="swap.utils.subject.Subject">
-<em class="property">class </em><code class="descclassname">swap.utils.subject.</code><code class="descname">Subject</code><span class="sig-paren">(</span><em>subject</em>, <em>gold</em>, <em>score</em>, <em>seen=0</em>, <em>retired=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subject" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">swap.utils.subject.</code><code class="descname">Subject</code><span class="sig-paren">(</span><em>subject</em>, <em>gold</em>, <em>config</em>, <em>score=None</em>, <em>seen=0</em>, <em>retired=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to track an individual subject, its gold status, and its
+score.</p>
 <dl class="method">
 <dt id="swap.utils.subject.Subject.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>subject</em>, <em>gold</em>, <em>score</em>, <em>seen=0</em>, <em>retired=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subject.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subject.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>subject</em>, <em>gold</em>, <em>config</em>, <em>score=None</em>, <em>seen=0</em>, <em>retired=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subject.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subject.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="swap.utils.subject.Subject.classify">
 <code class="descname">classify</code><span class="sig-paren">(</span><em>user</em>, <em>cl</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subject.classify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subject.classify" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Add a classification to this subject</p>
+<p>user: user that made the classification
+cl: classification, 1 or 0</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="swap.utils.subject.Subject.dump">
 <code class="descname">dump</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subject.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subject.dump" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Dump this subject</p>
+</dd></dl>
 
 <dl class="classmethod">
 <dt id="swap.utils.subject.Subject.load">
 <em class="property">classmethod </em><code class="descname">load</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subject.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subject.load" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Load a subject from dumped data</p>
+</dd></dl>
 
 <dl class="classmethod">
 <dt id="swap.utils.subject.Subject.new">
-<em class="property">classmethod </em><code class="descname">new</code><span class="sig-paren">(</span><em>subject</em>, <em>gold</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subject.new"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subject.new" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">classmethod </em><code class="descname">new</code><span class="sig-paren">(</span><em>subject</em>, <em>gold</em>, <em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subject.new"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subject.new" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new Subject</p>
+</dd></dl>
 
 <dl class="attribute">
-<dt id="swap.utils.subject.Subject.p0">
-<code class="descname">p0</code><em class="property"> = 0.12</em><a class="headerlink" href="#swap.utils.subject.Subject.p0" title="Permalink to this definition">¶</a></dt>
+<dt id="swap.utils.subject.Subject.score">
+<code class="descname">score</code><a class="headerlink" href="#swap.utils.subject.Subject.score" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="swap.utils.subject.Subject.truncate">
 <code class="descname">truncate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subject.truncate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subject.truncate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Clear the history of this subject, and update the prior to the
+current score.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="swap.utils.subject.Subject.update_score">
 <code class="descname">update_score</code><span class="sig-paren">(</span><em>thresholds=None</em>, <em>history=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subject.update_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subject.update_score" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Recalculate the score for this subject from its stored classification
+history.</p>
+<dl class="docutils">
+<dt>thresholds: Also update retirement status of this subject given</dt>
+<dd>threshold parameters. (bogus, real)</dd>
+</dl>
+<p>history: (bool) Return list of score history</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="swap.utils.subject.Subject.update_user">
 <code class="descname">update_user</code><span class="sig-paren">(</span><em>user</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subject.update_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subject.update_user" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Update the history of this subject when a user’s score has changed</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="swap.utils.subject.Subjects">
-<em class="property">class </em><code class="descclassname">swap.utils.subject.</code><code class="descname">Subjects</code><span class="sig-paren">(</span><em>items=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subjects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subjects" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">swap.utils.subject.</code><code class="descname">Subjects</code><span class="sig-paren">(</span><em>config</em>, <em>items=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subjects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subjects" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#swap.utils.collection.Collection" title="swap.utils.collection.Collection"><code class="xref py py-class docutils literal notranslate"><span class="pre">swap.utils.collection.Collection</span></code></a></p>
+<p>Collection of Subjects</p>
+<dl class="method">
+<dt id="swap.utils.subject.Subjects.get_changed">
+<code class="descname">get_changed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subjects.get_changed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subjects.get_changed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="swap.utils.subject.Subjects.gold">
 <code class="descname">gold</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subjects.gold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subjects.gold" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return subjects that have a gold label</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="swap.utils.subject.Subjects.new">
 <code class="descname">new</code><span class="sig-paren">(</span><em>subject</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subjects.new"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subjects.new" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Create and return a new Subject</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="swap.utils.subject.Subjects.retired">
 <code class="descname">retired</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Subjects.retired"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Subjects.retired" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return all retired subjects</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -447,6 +482,13 @@
 <dt id="swap.utils.subject.Thresholds">
 <em class="property">class </em><code class="descclassname">swap.utils.subject.</code><code class="descname">Thresholds</code><span class="sig-paren">(</span><em>subjects</em>, <em>fpr</em>, <em>mdr</em>, <em>thresholds=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Thresholds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Thresholds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to determine retirement thresholds</p>
+<p>Thresholds are determined from the false positive rate (fpr) and the
+missed detection rate (mdr), considering only the subjects with gold
+labels. The bogus retirement threshold is set such that a rate equal
+to mdr of real subjects are mislabeled as bogus. The real retirement
+threshold is set such that a rate equal to fpr of bogus subjects are
+labeled as real.</p>
 <dl class="method">
 <dt id="swap.utils.subject.Thresholds.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>subjects</em>, <em>fpr</em>, <em>mdr</em>, <em>thresholds=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Thresholds.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Thresholds.__init__" title="Permalink to this definition">¶</a></dt>
@@ -456,22 +498,26 @@
 <dl class="method">
 <dt id="swap.utils.subject.Thresholds.dump">
 <code class="descname">dump</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Thresholds.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Thresholds.dump" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Dump thresholds object</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="swap.utils.subject.Thresholds.get_counts">
 <code class="descname">get_counts</code><span class="sig-paren">(</span><em>scores</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Thresholds.get_counts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Thresholds.get_counts" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get number of subjects in each gold label class (-1,0,1)</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="swap.utils.subject.Thresholds.get_scores">
 <code class="descname">get_scores</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Thresholds.get_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Thresholds.get_scores" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Generate sorted list of subject scores and gold labels</p>
+</dd></dl>
 
 <dl class="classmethod">
 <dt id="swap.utils.subject.Thresholds.load">
 <em class="property">classmethod </em><code class="descname">load</code><span class="sig-paren">(</span><em>subjects</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/subject.html#Thresholds.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.subject.Thresholds.load" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Load thresholds from dumped data</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -480,17 +526,29 @@
 <span id="swap-utils-user"></span><h1><a class="reference internal" href="#module-swap.utils.user" title="swap.utils.user"><code class="xref py py-mod docutils literal notranslate"><span class="pre">swap.utils.user</span></code></a><a class="headerlink" href="#module-swap.utils.user" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="swap.utils.user.User">
-<em class="property">class </em><code class="descclassname">swap.utils.user.</code><code class="descname">User</code><span class="sig-paren">(</span><em>user</em>, <em>username</em>, <em>correct</em>, <em>seen</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/user.html#User"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.user.User" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">swap.utils.user.</code><code class="descname">User</code><span class="sig-paren">(</span><em>user</em>, <em>username</em>, <em>confusion</em>, <em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/user.html#User"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.user.User" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="swap.utils.user.User.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>user</em>, <em>username</em>, <em>correct</em>, <em>seen</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/user.html#User.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.user.User.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>user</em>, <em>username</em>, <em>confusion</em>, <em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/user.html#User.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.user.User.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>confusion</strong> (<em>(</em><em>[</em><em>0_numer</em><em>, </em><em>1_numer</em><em>]</em><em>, </em><em>[</em><em>0_denom</em><em>, </em><em>1_denom</em><em>]</em><em>)</em>) – </td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="swap.utils.user.User.classify">
 <code class="descname">classify</code><span class="sig-paren">(</span><em>subject</em>, <em>cl</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/user.html#User.classify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.user.User.classify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="swap.utils.user.User.confusion">
+<code class="descname">confusion</code><a class="headerlink" href="#swap.utils.user.User.confusion" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -505,7 +563,7 @@
 
 <dl class="classmethod">
 <dt id="swap.utils.user.User.new">
-<em class="property">classmethod </em><code class="descname">new</code><span class="sig-paren">(</span><em>user</em>, <em>username</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/user.html#User.new"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.user.User.new" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">new</code><span class="sig-paren">(</span><em>user</em>, <em>username</em>, <em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/user.html#User.new"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.user.User.new" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -537,12 +595,118 @@
 
 <dl class="class">
 <dt id="swap.utils.user.Users">
-<em class="property">class </em><code class="descclassname">swap.utils.user.</code><code class="descname">Users</code><span class="sig-paren">(</span><em>items=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/user.html#Users"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.user.Users" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">swap.utils.user.</code><code class="descname">Users</code><span class="sig-paren">(</span><em>config</em>, <em>items=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/user.html#Users"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.user.Users" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#swap.utils.collection.Collection" title="swap.utils.collection.Collection"><code class="xref py py-class docutils literal notranslate"><span class="pre">swap.utils.collection.Collection</span></code></a></p>
 <dl class="method">
 <dt id="swap.utils.user.Users.new">
 <code class="descname">new</code><span class="sig-paren">(</span><em>user</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/swap/utils/user.html#Users.new"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#swap.utils.user.Users.new" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-caesar_external.extractor">
+<span id="caesar-external-extractor"></span><h1><a class="reference internal" href="#module-caesar_external.extractor" title="caesar_external.extractor"><code class="xref py py-mod docutils literal notranslate"><span class="pre">caesar_external.extractor</span></code></a><a class="headerlink" href="#module-caesar_external.extractor" title="Permalink to this headline">¶</a></h1>
+<p>Get classifications from Panoptes</p>
+<dl class="class">
+<dt id="caesar_external.extractor.Extractor">
+<em class="property">class </em><code class="descclassname">caesar_external.extractor.</code><code class="descname">Extractor</code><a class="reference internal" href="../_modules/caesar_external/extractor.html#Extractor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.extractor.Extractor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="classmethod">
+<dt id="caesar_external.extractor.Extractor.get_classifications">
+<em class="property">classmethod </em><code class="descname">get_classifications</code><span class="sig-paren">(</span><em>last_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/caesar_external/extractor.html#Extractor.get_classifications"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.extractor.Extractor.get_classifications" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="caesar_external.extractor.Extractor.last_id">
+<em class="property">classmethod </em><code class="descname">last_id</code><span class="sig-paren">(</span><em>next_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/caesar_external/extractor.html#Extractor.last_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.extractor.Extractor.last_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="caesar_external.extractor.Extractor.next">
+<em class="property">classmethod </em><code class="descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/caesar_external/extractor.html#Extractor.next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.extractor.Extractor.next" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-caesar_external.extractor">
+<span id="caesar-external-reducer"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">caesar_external.reducer</span></code><a class="headerlink" href="#module-caesar_external.extractor" title="Permalink to this headline">¶</a></h1>
+<p>Get classifications from Panoptes</p>
+</div>
+<div class="section" id="module-caesar_external.data">
+<span id="caesar-external-data"></span><h1><a class="reference internal" href="#module-caesar_external.data" title="caesar_external.data"><code class="xref py py-mod docutils literal notranslate"><span class="pre">caesar_external.data</span></code></a><a class="headerlink" href="#module-caesar_external.data" title="Permalink to this headline">¶</a></h1>
+<p>Storage module to track which classification was gotten last</p>
+<dl class="class">
+<dt id="caesar_external.data.Config">
+<em class="property">class </em><code class="descclassname">caesar_external.data.</code><code class="descname">Config</code><span class="sig-paren">(</span><em>name</em>, <em>project</em>, <em>workflow</em>, <em>last_id</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/caesar_external/data.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.data.Config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="caesar_external.data.Config.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>project</em>, <em>workflow</em>, <em>last_id</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/caesar_external/data.html#Config.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.data.Config.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="caesar_external.data.Config.caesar_endpoint">
+<em class="property">static </em><code class="descname">caesar_endpoint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/caesar_external/data.html#Config.caesar_endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.data.Config.caesar_endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="caesar_external.data.Config.dump">
+<code class="descname">dump</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/caesar_external/data.html#Config.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.data.Config.dump" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="caesar_external.data.Config.instance">
+<em class="property">classmethod </em><code class="descname">instance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/caesar_external/data.html#Config.instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.data.Config.instance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="caesar_external.data.Config.load">
+<em class="property">classmethod </em><code class="descname">load</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/caesar_external/data.html#Config.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.data.Config.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="caesar_external.data.Config.save">
+<code class="descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/caesar_external/data.html#Config.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.data.Config.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="caesar_external.data.Config.workflow_path">
+<code class="descname">workflow_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/caesar_external/data.html#Config.workflow_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.data.Config.workflow_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-caesar_external.utils.caesar_utils">
+<span id="caesar-external-utils-caesar-utils"></span><h1><a class="reference internal" href="#module-caesar_external.utils.caesar_utils" title="caesar_external.utils.caesar_utils"><code class="xref py py-mod docutils literal notranslate"><span class="pre">caesar_external.utils.caesar_utils</span></code></a><a class="headerlink" href="#module-caesar_external.utils.caesar_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="caesar_external.utils.caesar_utils.Client">
+<em class="property">class </em><code class="descclassname">caesar_external.utils.caesar_utils.</code><code class="descname">Client</code><a class="reference internal" href="../_modules/caesar_external/utils/caesar_utils.html#Client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.utils.caesar_utils.Client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="caesar_external.utils.caesar_utils.Client.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/caesar_external/utils/caesar_utils.html#Client.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.utils.caesar_utils.Client.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="caesar_external.utils.caesar_utils.Client.extract">
+<em class="property">classmethod </em><code class="descname">extract</code><span class="sig-paren">(</span><em>project</em>, <em>last_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/caesar_external/utils/caesar_utils.html#Client.extract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.utils.caesar_utils.Client.extract" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="caesar_external.utils.caesar_utils.Client.instance">
+<em class="property">classmethod </em><code class="descname">instance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/caesar_external/utils/caesar_utils.html#Client.instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.utils.caesar_utils.Client.instance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="caesar_external.utils.caesar_utils.Client.reduce">
+<em class="property">classmethod </em><code class="descname">reduce</code><span class="sig-paren">(</span><em>subject</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/caesar_external/utils/caesar_utils.html#Client.reduce"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#caesar_external.utils.caesar_utils.Client.reduce" title="Permalink to this definition">¶</a></dt>
+<dd><p>PUT subject score to Caesar</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -610,9 +774,7 @@
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enableSticky();
-          
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script> 
 

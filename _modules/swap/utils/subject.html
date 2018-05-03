@@ -150,6 +150,7 @@
   <h1>Source code for swap.utils.subject</h1><div class="highlight"><pre>
 <span></span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">import</span> <span class="nn">json</span>
 
 <span class="kn">from</span> <span class="nn">swap.utils.collection</span> <span class="k">import</span> <span class="n">Collection</span>
 
@@ -158,33 +159,84 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Subject"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Subject">[docs]</a><span class="k">class</span> <span class="nc">Subject</span><span class="p">:</span>
-    <span class="n">p0</span> <span class="o">=</span> <span class="o">.</span><span class="mi">12</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to track an individual subject, its gold status, and its</span>
+<span class="sd">    score.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Subject.__init__"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Subject.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">gold</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">seen</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">retired</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Subject.__init__"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Subject.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">gold</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span>
+                 <span class="n">score</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seen</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">retired</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">subject</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gold</span> <span class="o">=</span> <span class="n">gold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+
+        <span class="n">score</span> <span class="o">=</span> <span class="n">score</span> <span class="ow">or</span> <span class="n">config</span><span class="o">.</span><span class="n">p0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prior</span> <span class="o">=</span> <span class="n">score</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">score</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_score</span> <span class="o">=</span> <span class="n">score</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_changed</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">seen</span> <span class="o">=</span> <span class="n">seen</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">retired</span> <span class="o">=</span> <span class="n">retired</span></div>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_score</span>
+
+    <span class="nd">@score</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_changed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_changed</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_score</span> <span class="o">!=</span> <span class="n">new</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_score</span> <span class="o">=</span> <span class="n">new</span>
+
 <div class="viewcode-block" id="Subject.new"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Subject.new">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">gold</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">gold</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">p0</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">gold</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new Subject</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">gold</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Subject.classify"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Subject.classify">[docs]</a>    <span class="k">def</span> <span class="nf">classify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">cl</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a classification to this subject</span>
+
+<span class="sd">        Params</span>
+<span class="sd">        ------</span>
+
+<span class="sd">        user: user that made the classification</span>
+<span class="sd">        cl: classification, 1 or 0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Add classification to history</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">seen</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">score</span><span class="p">,</span> <span class="n">cl</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Subject.update_user"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Subject.update_user">[docs]</a>    <span class="k">def</span> <span class="nf">update_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the history of this subject when a user&#39;s score has changed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">)):</span>
             <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">user</span><span class="o">.</span><span class="n">score</span><span class="p">,</span> <span class="n">h</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
 
+    <span class="k">def</span> <span class="nf">_retire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thresholds</span><span class="p">,</span> <span class="n">score</span><span class="p">):</span>
+        <span class="n">bogus</span><span class="p">,</span> <span class="n">real</span> <span class="o">=</span> <span class="n">thresholds</span>
+        <span class="k">if</span> <span class="n">score</span> <span class="o">&lt;</span> <span class="n">bogus</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="n">real</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
 <div class="viewcode-block" id="Subject.update_score"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Subject.update_score">[docs]</a>    <span class="k">def</span> <span class="nf">update_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thresholds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">history</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Recalculate the score for this subject from its stored classification</span>
+<span class="sd">        history.</span>
+
+<span class="sd">        Params</span>
+<span class="sd">        ------</span>
+
+<span class="sd">        thresholds: Also update retirement status of this subject given</span>
+<span class="sd">                    threshold parameters. (bogus, real)</span>
+<span class="sd">        history: (bool) Return list of score history</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior</span>
         <span class="n">_history</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="n">u0</span><span class="p">,</span> <span class="n">u1</span><span class="p">),</span> <span class="n">cl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">:</span>
@@ -204,37 +256,46 @@
             <span class="k">if</span> <span class="n">history</span><span class="p">:</span>
                 <span class="n">_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">retired</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="n">thresholds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">bogus</span><span class="p">,</span> <span class="n">real</span> <span class="o">=</span> <span class="n">thresholds</span>
-                <span class="k">if</span> <span class="n">score</span> <span class="o">&lt;</span> <span class="n">bogus</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">retired</span> <span class="o">=</span> <span class="mi">0</span>
-                    <span class="k">break</span>
-                <span class="k">elif</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="n">real</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">retired</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">retired</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retire</span><span class="p">(</span><span class="n">thresholds</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">retired</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
                     <span class="k">break</span>
 
+        <span class="k">if</span> <span class="n">thresholds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">retired</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retire</span><span class="p">(</span><span class="n">thresholds</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">score</span>
         <span class="k">if</span> <span class="n">history</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">score</span><span class="p">,</span> <span class="n">_history</span>
         <span class="k">return</span> <span class="n">score</span></div>
 
 <div class="viewcode-block" id="Subject.dump"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Subject.dump">[docs]</a>    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">([</span>
-            <span class="p">(</span><span class="s1">&#39;subject&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;gold&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gold</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">),</span>
-            <span class="c1">#(&#39;history&#39;, self.history),</span>
-            <span class="p">(</span><span class="s1">&#39;retired&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">retired</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;seen&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seen</span><span class="p">),</span>
-        <span class="p">])</span></div>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dump this subject</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gold</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">retired</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seen</span></div>
+        <span class="c1"># return OrderedDict([</span>
+            <span class="c1"># (&#39;subject&#39;, self.id),</span>
+            <span class="c1"># (&#39;gold&#39;, self.gold),</span>
+            <span class="c1"># (&#39;score&#39;, self.score),</span>
+            <span class="c1"># #(&#39;history&#39;, self.history),</span>
+            <span class="c1"># (&#39;retired&#39;, self.retired),</span>
+            <span class="c1"># (&#39;seen&#39;, self.seen),</span>
+        <span class="c1"># ])</span>
 
 <div class="viewcode-block" id="Subject.truncate"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Subject.truncate">[docs]</a>    <span class="k">def</span> <span class="nf">truncate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clear the history of this subject, and update the prior to the</span>
+<span class="sd">        current score.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prior</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="p">[]</span></div>
 
 <div class="viewcode-block" id="Subject.load"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Subject.load">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a subject from dumped data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="s1">&#39;subject&#39;</span><span class="p">,</span> <span class="s1">&#39;gold&#39;</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="s1">&#39;retired&#39;</span><span class="p">,</span> <span class="s1">&#39;seen&#39;</span><span class="p">,</span> <span class="s1">&#39;config&#39;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">}</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -246,22 +307,40 @@
 
 
 <div class="viewcode-block" id="Subjects"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Subjects">[docs]</a><span class="k">class</span> <span class="nc">Subjects</span><span class="p">(</span><span class="n">Collection</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collection of Subjects</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Subjects.new"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Subjects.new">[docs]</a>    <span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">Subject</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create and return a new Subject</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Subject</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span></div>
 
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_load_item</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">Subject</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_load_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Subject</span><span class="o">.</span><span class="n">load</span><span class="p">({</span><span class="s1">&#39;config&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">})</span>
 
 <div class="viewcode-block" id="Subjects.retired"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Subjects.retired">[docs]</a>    <span class="k">def</span> <span class="nf">retired</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return all retired subjects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">subjects</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">subject</span><span class="o">.</span><span class="n">retired</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
                 <span class="n">subjects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subject</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">subjects</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="Subjects.get_changed"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Subjects.get_changed">[docs]</a>    <span class="k">def</span> <span class="nf">get_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">subjects</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">subject</span><span class="o">.</span><span class="n">has_changed</span><span class="p">:</span>
+                <span class="n">subjects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subject</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">subjects</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="Subjects.gold"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Subjects.gold">[docs]</a>    <span class="k">def</span> <span class="nf">gold</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return subjects that have a gold label</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">subjects</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">subject</span><span class="o">.</span><span class="n">gold</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
@@ -270,6 +349,16 @@
 
 
 <div class="viewcode-block" id="Thresholds"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Thresholds">[docs]</a><span class="k">class</span> <span class="nc">Thresholds</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to determine retirement thresholds</span>
+
+<span class="sd">    Thresholds are determined from the false positive rate (fpr) and the</span>
+<span class="sd">    missed detection rate (mdr), considering only the subjects with gold</span>
+<span class="sd">    labels. The bogus retirement threshold is set such that a rate equal</span>
+<span class="sd">    to mdr of real subjects are mislabeled as bogus. The real retirement</span>
+<span class="sd">    threshold is set such that a rate equal to fpr of bogus subjects are</span>
+<span class="sd">    labeled as real.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Thresholds.__init__"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Thresholds.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subjects</span><span class="p">,</span> <span class="n">fpr</span><span class="p">,</span> <span class="n">mdr</span><span class="p">,</span> <span class="n">thresholds</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subjects</span> <span class="o">=</span> <span class="n">subjects</span>
@@ -278,11 +367,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span> <span class="o">=</span> <span class="n">thresholds</span></div>
 
 <div class="viewcode-block" id="Thresholds.dump"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Thresholds.dump">[docs]</a>    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="s1">&#39;fpr&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">fpr</span><span class="p">,</span>
-            <span class="s1">&#39;mdr&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdr</span><span class="p">,</span>
-            <span class="s1">&#39;thresholds&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span>
-        <span class="p">}</span></div>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dump thresholds object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fpr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdr</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span><span class="p">)</span></div>
+        <span class="c1"># return {</span>
+            <span class="c1"># &#39;fpr&#39;: self.fpr,</span>
+            <span class="c1"># &#39;mdr&#39;: self.mdr,</span>
+            <span class="c1"># &#39;thresholds&#39;: json.dumps(self.thresholds)</span>
+        <span class="c1"># }</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="p">())</span>
@@ -292,10 +385,19 @@
 
 <div class="viewcode-block" id="Thresholds.load"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Thresholds.load">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">subjects</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load thresholds from dumped data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="s1">&#39;fpr&#39;</span><span class="p">,</span> <span class="s1">&#39;mdr&#39;</span><span class="p">,</span> <span class="s1">&#39;thresholds&#39;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">}</span>
         <span class="n">data</span><span class="p">[</span><span class="s1">&#39;subjects&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subjects</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;thresholds&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;thresholds&#39;</span><span class="p">])</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Thresholds.get_scores"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Thresholds.get_scores">[docs]</a>    <span class="k">def</span> <span class="nf">get_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate sorted list of subject scores and gold labels</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">iter</span><span class="p">():</span>
             <span class="c1"># if len(subject.history) &gt; 0:</span>
@@ -305,12 +407,18 @@
         <span class="k">return</span> <span class="n">scores</span></div>
 
 <div class="viewcode-block" id="Thresholds.get_counts"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.subject.Thresholds.get_counts">[docs]</a>    <span class="k">def</span> <span class="nf">get_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scores</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get number of subjects in each gold label class (-1,0,1)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">counts</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]}</span>
         <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">scores</span><span class="p">:</span>
             <span class="n">counts</span><span class="p">[</span><span class="n">score</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">counts</span></div>
 
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determine retirement tresholds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span>
 
@@ -359,15 +467,16 @@
                         <span class="n">bogus</span> <span class="o">=</span> <span class="n">score</span>
                         <span class="k">break</span>
 
-        <span class="k">if</span> <span class="n">bogus</span> <span class="o">&gt;=</span> <span class="n">Subject</span><span class="o">.</span><span class="n">p0</span><span class="p">:</span>
+        <span class="n">p0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">p0</span>
+        <span class="k">if</span> <span class="n">bogus</span> <span class="o">&gt;=</span> <span class="n">p0</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;bogus is greater than prior, &#39;</span>
                            <span class="s1">&#39;setting bogus threshold to p0&#39;</span><span class="p">)</span>
-            <span class="n">bogus</span> <span class="o">=</span> <span class="n">Subject</span><span class="o">.</span><span class="n">p0</span>
+            <span class="n">bogus</span> <span class="o">=</span> <span class="n">p0</span>
 
-        <span class="k">if</span> <span class="n">real</span> <span class="o">&lt;=</span> <span class="n">Subject</span><span class="o">.</span><span class="n">p0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">real</span> <span class="o">&lt;=</span> <span class="n">p0</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;real is less than prior, &#39;</span>
                            <span class="s1">&#39;setting real threshold to p0&#39;</span><span class="p">)</span>
-            <span class="n">real</span> <span class="o">=</span> <span class="n">Subject</span><span class="o">.</span><span class="n">p0</span>
+            <span class="n">real</span> <span class="o">=</span> <span class="n">p0</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;bogus </span><span class="si">%.4f</span><span class="s1"> real </span><span class="si">%.4f</span><span class="s1">, fpr </span><span class="si">%.4f</span><span class="s1"> mdr </span><span class="si">%.4f</span><span class="s1">&#39;</span><span class="p">,</span>
                      <span class="n">bogus</span><span class="p">,</span> <span class="n">real</span><span class="p">,</span> <span class="n">_fpr</span><span class="p">,</span> <span class="n">_mdr</span><span class="p">)</span>
@@ -560,9 +669,7 @@
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enableSticky();
-          
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script> 
 

@@ -92,7 +92,10 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#configuring-swap">Configuring SWAP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#running-swap">Running SWAP</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#online-swap">Online swap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#online-swap">Online swap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#caesar-config-command-reference">Caesar Config Command Reference</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api/index.html">API Documentation</a></li>
@@ -187,7 +190,9 @@
 </pre></div>
 </div>
 <p>This will bring up a python interpreter, which you can use to interact with the <cite>config</cite> object. The config object lets you set configure how swap should parse the csv classification dump from panoptes. Each project will have a different task key, and different labels that are used in the actual classification. The config annotation field has subfields <cite>‘task’</cite>, <cite>‘true’</cite>, and <cite>‘false’</cite> to configure this. This is an example of how this might be set up:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">annotation</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;T1&#39;</span><span class="p">,</span> <span class="s1">&#39;true&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Real&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;false&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Bogus&#39;</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]})</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">annotation</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+    <span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;T1&#39;</span><span class="p">,</span> <span class="s1">&#39;true&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Real&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;false&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Bogus&#39;</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">})</span>
 </pre></div>
 </div>
 <p>Other configuration options:</p>
@@ -237,7 +242,7 @@ for retirement.</td>
 <p>The csv file should have two columns labeled <cite>subject</cite> and <cite>gold</cite>. The gold label column should have
 a <cite>1</cite> for real subjects and a <cite>0</cite> for bogus subjects. Only one row per subject.</p>
 <p>Then run swap on a panoptes csv dump with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>`swap run ${NAME} ${CLASSIFICATION_DUMP}
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>swap run ${NAME} ${CLASSIFICATION_DUMP}
 </pre></div>
 </div>
 <p>If swap runs out of memory during the process, you can split the csv into batches in a script
@@ -258,17 +263,59 @@ and the score thresholds used for retirement decisions.</p>
 </div>
 <div class="section" id="online-swap">
 <h2>Online swap<a class="headerlink" href="#online-swap" title="Permalink to this headline">¶</a></h2>
-<p>Online swap queries classifications from the panoptes api and sends them
-to a placeholder reducer in caesar. Make sure caesar_external is properly
-setup for this project, then configure online swap with:
-<cite>swap online config ${NAME} ${CAESAR_NAME}</cite> Where <cite>${CAESAR_NAME}</cite> is the name
-used to configure the caesar_external library for this project.</p>
-<p>Then run swap online with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>swap online run ${NAME}
+<p>Swap can be configured to run in online mode, where it queries classifications from zooniverse and sends swap scores as reductions to caesar. The classifications can either be queried through the panoptes api, or through caesar in conjunction with Amazon’s Simple Queue Service.</p>
+<p>Start by deciding how you will authenticate with zooniverse. You’ll probably either want to configure this to use environment variables containing your Zooniverse username and password, or configure to use an OAuth client id and secret pair. Alternatively you will be asked for your zooniverse username and password every time a command is run. Store username and password in <code class="code docutils literal notranslate"><span class="pre">$PANOPTES_USERNAME</span></code> and <code class="code docutils literal notranslate"><span class="pre">$PANOPTES_PASSWORD</span></code>, and store client id and secret in <code class="code docutils literal notranslate"><span class="pre">$PANOPTES_CLIENT_SECRET</span></code> and <code class="code docutils literal notranslate"><span class="pre">$PANOPTES_CLIENT_ID</span></code>. API keys can be generated through the <a class="reference external" href="https://panoptes.zooniverse.org/oauth/applications">Zooniverse OAuth provider</a> with <code class="code docutils literal notranslate"><span class="pre">urn:ietf:wg:oauth:2.0:oob</span></code> as the callback URI.</p>
+<p>Next you should run the configuration command. The syntax for the command is described below. To configure this module to get classifications from caesar, specify the sqs queue caesar has been configured to dump classifications into. If this is not specified then classifications will be fetched from panoptes. Caesar must be configured to accept reductions from an external source using a placeholder reducer. The name given to the reducer in caesar’s config should be entered for <code class="code docutils literal notranslate"><span class="pre">caeesar_name</span></code>.</p>
+<div class="section" id="caesar-config-command-reference">
+<h3>Caesar Config Command Reference<a class="headerlink" href="#caesar-config-command-reference" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Usage: caesar config new [OPTIONS] NAME PROJECT WORKFLOW
+
+  Generate new configuration for a project.
+
+  Arguments
+  ---------
+  name - Arbitrary name used to store configuration
+  project - Zooniverse project id
+  workflow - Zooniverse workflow id
+
+Options:
+  --last_id INTEGER   Exclude classifications before this classification id.
+  --caesar_name TEXT  Name used for swap as a reducer in caesar&#39;s
+                      configuration, see
+                      https://zooniverse.github.io/caesar/#introduction about
+                      setting up a reducer in caesar.
+  --sqs_queue TEXT    Specify whether caesar should subscribe to an SQS queue
+                      for classifications. If left blank will default to
+                      panoptes api as classification source.
+  --staging           Flag to use staging endpoints for panoptes and caesar
+  --auth_mode TEXT    interactive,environment,api_key
+                      If api_key is selected,
+                      make sure client id and client secret are stored in
+                      environment variables in PANOPTES_CLIENT_ID and
+                      PANOPTES_CLIENT_SECRET
+  --help              Show this message and exit.
 </pre></div>
 </div>
-<p>This will fetch the most recent classifications from the panoptes api, run swap on the data,
-then determine retirement thresholds, and send swap scores back to caesar.</p>
+<p>Now point swap to the right caesar_external configuration you just set up. The command to do this is specified below.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Usage: swap online config [OPTIONS] NAME ONLINE_NAME
+
+  Configure swap to use caesar external configuration
+
+  Arguments
+  ---------
+  name - Name of swap configuration
+  online-name - Name of caesar_external configuration
+
+Options:
+  --help  Show this message and exit.
+</pre></div>
+</div>
+<p>Finally run swap in online mode. You can use either of the following commands. The first fetches all classifications and posts reductions. The second runs the process in a loop (WARNING this is still experimental).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>swap online run <span class="si">${</span><span class="nv">NAME</span><span class="si">}</span>
+swap online run_continuous <span class="si">${</span><span class="nv">NAME</span><span class="si">}</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -336,9 +383,7 @@ then determine retirement thresholds, and send swap scores back to caesar.</p>
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enableSticky();
-          
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script> 
 

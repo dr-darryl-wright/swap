@@ -150,24 +150,32 @@
   <h1>Source code for swap.utils.user</h1><div class="highlight"><pre>
 <span></span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">import</span> <span class="nn">json</span>
 
 <span class="kn">from</span> <span class="nn">swap.utils.collection</span> <span class="k">import</span> <span class="n">Collection</span>
 
 
 <div class="viewcode-block" id="User"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.user.User">[docs]</a><span class="k">class</span> <span class="nc">User</span><span class="p">:</span>
 
-<div class="viewcode-block" id="User.__init__"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.user.User.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">correct</span><span class="p">,</span> <span class="n">seen</span><span class="p">):</span>
+<div class="viewcode-block" id="User.__init__"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.user.User.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">confusion</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        confusion: ([0_numer, 1_numer], [0_denom, 1_denom])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">user</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">username</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">prior</span> <span class="o">=</span> <span class="p">(</span><span class="n">correct</span><span class="p">,</span> <span class="n">seen</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">correct</span> <span class="o">=</span> <span class="n">correct</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">seen</span> <span class="o">=</span> <span class="n">seen</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prior</span> <span class="o">=</span> <span class="n">confusion</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numer</span> <span class="o">=</span> <span class="n">confusion</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">denom</span> <span class="o">=</span> <span class="n">confusion</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="User.new"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.user.User.new">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
+    <span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span> <span class="n">config</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="User.save"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.user.User.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># save user to file</span>
@@ -184,50 +192,53 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">subject</span><span class="o">.</span><span class="n">gold</span><span class="p">,</span> <span class="n">h</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">correct</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">correct</span>
-        <span class="n">seen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">seen</span>
-        <span class="n">gamma</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">def</span> <span class="nf">confusion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denom</span><span class="p">)</span>
 
-        <span class="n">score</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">]</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">numer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numer</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">denom</span>
+
+        <span class="n">gamma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">gamma</span>  <span class="c1"># defaults to 1</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">user_default</span>  <span class="c1"># defaults to [.5, .5]</span>
+
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
-            <span class="k">if</span> <span class="n">seen</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">score</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">correct</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">gamma</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">seen</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">gamma</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">denom</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">score</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">numer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">gamma</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">denom</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">gamma</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">score</span>
 
 <div class="viewcode-block" id="User.update_score"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.user.User.update_score">[docs]</a>    <span class="k">def</span> <span class="nf">update_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">correct</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">seen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">numer</span><span class="p">,</span> <span class="n">denom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior</span>
+
         <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">gold</span><span class="p">,</span> <span class="n">cl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">gold</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
-                <span class="n">seen</span><span class="p">[</span><span class="n">gold</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">denom</span><span class="p">[</span><span class="n">gold</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">if</span> <span class="n">gold</span> <span class="o">==</span> <span class="n">cl</span><span class="p">:</span>
-                    <span class="n">correct</span><span class="p">[</span><span class="n">gold</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">numer</span><span class="p">[</span><span class="n">gold</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">seen</span> <span class="o">=</span> <span class="n">seen</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">correct</span> <span class="o">=</span> <span class="n">correct</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numer</span> <span class="o">=</span> <span class="n">numer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">denom</span> <span class="o">=</span> <span class="n">denom</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span></div>
 
 <div class="viewcode-block" id="User.dump"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.user.User.dump">[docs]</a>    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">([</span>
-            <span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;correct&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">correct</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;seen&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seen</span><span class="p">),</span>
-        <span class="p">])</span></div>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">confusion</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="User.truncate"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.user.User.truncate">[docs]</a>    <span class="k">def</span> <span class="nf">truncate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">prior</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">correct</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seen</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prior</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">confusion</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="p">[]</span></div>
 
 <div class="viewcode-block" id="User.load"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.user.User.load">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;confusion&#39;</span><span class="p">,</span> <span class="s1">&#39;config&#39;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">}</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;confusion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;confusion&#39;</span><span class="p">])</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;id </span><span class="si">%s</span><span class="s1"> name </span><span class="si">%14s</span><span class="s1"> score </span><span class="si">%s</span><span class="s1"> length </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> \
-                <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seen</span><span class="p">))</span>
+                <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">denom</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
@@ -236,11 +247,10 @@
 <div class="viewcode-block" id="Users"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.user.Users">[docs]</a><span class="k">class</span> <span class="nc">Users</span><span class="p">(</span><span class="n">Collection</span><span class="p">):</span>
 
 <div class="viewcode-block" id="Users.new"><a class="viewcode-back" href="../../../api/autodoc.html#swap.utils.user.Users.new">[docs]</a>    <span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span></div>
 
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_load_item</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">User</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">_load_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">User</span><span class="o">.</span><span class="n">load</span><span class="p">({</span><span class="s1">&#39;config&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">})</span></div>
 </pre></div>
 
            </div>
@@ -297,9 +307,7 @@
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enableSticky();
-          
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script> 
 

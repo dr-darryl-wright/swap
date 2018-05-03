@@ -222,6 +222,7 @@
 <span class="sd">        classifications with different formats</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">task</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Searching for task: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">task</span><span class="p">))</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">annotations</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span> <span class="ow">and</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">annotations</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">annotations</span><span class="p">[</span><span class="n">task</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 
@@ -230,7 +231,7 @@
                 <span class="k">if</span> <span class="n">annotation</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">task</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">annotation</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Can</span><span class="se">\&#39;</span><span class="s1"> find task </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">annotations</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Can</span><span class="se">\&#39;</span><span class="s1">t find task </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">annotations</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
         <span class="c1"># raise self.AnnotationError(task, &#39;&#39;, annotations)</span>
 
@@ -304,9 +305,7 @@
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enableSticky();
-          
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script> 
 
