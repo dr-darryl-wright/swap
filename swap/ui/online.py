@@ -70,7 +70,7 @@ def run_continuous(name):
         logger.info('Starting SWAP (%s) in continuous online mode...' % name)
         while True:
             _, haveItems = Online.receive(swap)
-            if haveItems
+            if haveItems:
                 swap.save()
                 ce.Config.instance().save()
                 logger.debug('Saved swap status')
