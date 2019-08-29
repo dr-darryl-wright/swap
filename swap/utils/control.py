@@ -128,9 +128,9 @@ class SWAP:
             c.execute('INSERT INTO thresholds VALUES (?,?,?,?)',
                       (name, *self.thresholds.dump()))
 
-        c = conn.cursor()
-        c.execute('INSERT INTO config VALUES (?,?)',
-                  (name, json.dumps(self.config.dump())))
+        #c = conn.cursor()
+        #c.execute('INSERT INTO config VALUES (?,?)',
+        #          (name, json.dumps(self.config.dump())))
         conn.commit()
         conn.close()
 
